@@ -1,0 +1,247 @@
+[7:02 PM, 9/5/2024] Uma Cse: html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Landing Page with JavaScript Enhancements</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+            color: #333;
+            text-align: center;
+        }
+        header {
+            background: #00796b;
+            color: #fff;
+            padding: 15px 0;
+            position: relative;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .logo {
+            float: left;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        nav {
+            float: right;
+            margin-top: 10px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1em;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .hero {
+            background: url('https://via.placeholder.com/1600x600?text=Travel+Destinations') no-repeat center center/cover;
+            color: #fff;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        .hero h2 {
+            margin: 0;
+            font-size: 3em;
+        }
+        .hero p {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: #fff;
+            background: #004d40;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background: #00332d;
+        }
+        footer {
+            background: #00796b;
+            color: #fff;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        /* Additional styles for contact form and toggle content */
+        .contact {
+            background: #b2dfdb;
+            padding: 50px 0;
+        }
+        .contact form {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .contact form input,
+        .contact form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .contact form button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #004d40;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .contact form button:hover {
+            background: #00332d;
+        }
+        .toggle-content {
+            padding: 50px 0;
+            background: #80cbc4;
+        }
+        .toggle-content .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .toggle-content h2 {
+            margin-top: 0;
+        }
+        .toggle-content button {
+            padding: 10px 20px;
+            background: #004d40;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .toggle-content button:hover {
+            background: #00332d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">TravelNow</div>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Destinations</a>
+                <a href="#">Packages</a>
+                <a href="#">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="container">
+            <h2>Discover Your Next Adventure</h2>
+            <p>Find the best travel deals and destinations tailored just for you.</p>
+            <a href="#" class="button">Get Started</a>
+        </div>
+    </div>
+
+    <section class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form id="contactForm">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+            <p id="formMessage"></p>
+        </div>
+    </section>
+
+    <section class="toggle-content">
+        <div class="container">
+            <h2 id="toggleHeading">Content 1</h2>
+            <button id="toggleButton">Toggle Content</button>
+            <div id="toggleContent">
+                <p>This is content 1.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Travel Adventures. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contact Form Validation
+            const form = document.getElementById('contactForm');
+            const formMessage = document.getElementById('formMessage');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Validate form fields
+                const name = form.name.value.trim();
+                const email = form.email.value.trim();
+                const message = form.message.value.trim();
+
+                if (name === '' || email === '' || message === '') {
+                    formMessage.textContent = 'Please fill out all fields.';
+                    return;
+                }
+
+                // Optional: Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    formMessage.textContent = 'Please enter a valid email address.';
+                    return;
+                }
+
+                // Clear form and show success message
+                form.reset();
+                formMessage.textContent = 'Message sent successfully!';
+            });
+
+            // Toggle Content Button
+            const toggleButton = document.getElementById('toggleButton');
+            const toggleHeading = document.getElementById('toggleHeading');
+            const toggleContent = document.getElementById('toggleContent');
+
+            let contentState = 1; // Initial state
+
+            toggleButton.addEventListener('click', function() {
+                if (contentState === 1) {
+                    toggleHeading.textContent = 'Content 2';
+                    toggleContent.innerHTML = '<p>This is content 2.</p>';
+                    contentState = 2;
+                } else {
+                    toggleHeading.textContent = 'Content 1';
+                    toggleContent.innerHTML = '<p>This is content 1.</p>';
+                    contentState = 1;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
